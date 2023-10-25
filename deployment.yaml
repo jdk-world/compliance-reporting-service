@@ -1,0 +1,54 @@
+apiVersion: v1
+
+kind: Service 
+
+metadata:
+  name: compliance-reporting-service
+  labels:
+    app: compliance-reporting-service-svc-label
+
+spec:
+  ports:
+  - port: 8083
+    name: http
+
+  selector:
+    app: compliance-reporting-service-v1-v2
+
+  type: LoadBalancer
+
+---
+
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+  name: compliance-reporting-service-deployment-v1
+  labels:
+    app: compliance-reporting-service-dep-label
+
+spec:
+  replicas: 1
+  selector: 
+    matchLabels: 
+      app: compliance-reporting-service-v1-v2
+
+  template: # template for the pods
+    metadata:
+      labels:
+        app: compliance-reporting-service-v1-v2
+        version: v1
+
+    spec:
+      containers:
+      - name: compliance-reporting-service-ver1
+        image: docker.io/saurabh2204/compliance-reporting-service:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8899
+        resources:
+          limits:
+            cpu: 500m
+          requests:
+            cpu: 200m        
