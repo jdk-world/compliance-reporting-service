@@ -10,7 +10,7 @@ EXPOSE 8080
 WORKDIR /
 
 # Add item request jar to docker file
-ADD target/it-patch-mgmt-0.0.1-SNAPSHOT.jar /run/it-patch-mgmt-0.0.1-SNAPSHOT.jar
+ADD target/compliance-reporting-service-0.0.1-SNAPSHOT.jar /run/compliance-reporting-service-0.0.1-SNAPSHOT.jar
 
 RUN mkdir -p /run
 RUN java --version
@@ -19,4 +19,4 @@ RUN java --version
 #RUN apk update
 #RUN apk upgrade
 
-ENTRYPOINT exec java -jar /run/it-patch-mgmt-0.0.1-SNAPSHOT.jar
+ENTRYPOINT exec java -jar /run/compliance-reporting-service-0.0.1-SNAPSHOT.jar
