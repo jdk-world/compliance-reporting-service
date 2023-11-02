@@ -18,6 +18,7 @@ import java.util.Map.Entry;
 public class ComplianceService {
 	@Autowired
 	JdbcTemplate jdbc;
+	public static final String DEFAULT_DATE_COMPLETION = "1900-01-01";//2023-11-02T11:01//2023-10-01
 
 	
 	public List<Employee> findAllComplianceReports(String[] filterArr) {
@@ -95,7 +96,12 @@ public class ComplianceService {
 					
 					obj.setApplicable_patch_id(((String) patchIdNameMap.get(patchId).toString()));
 					obj.setPatch_compliance(((String) row.get("patch_compliance")).toString());
-					obj.setDate_of_completion(((Date) row.get("date_of_completion")).toString());
+					
+					String dateOfCompletion = ((Date) row.get("date_of_completion")).toString();
+					if(StringUtils.equalsIgnoreCase(DEFAULT_DATE_COMPLETION, dateOfCompletion))
+						dateOfCompletion = StringUtils.EMPTY;
+					
+					obj.setDate_of_completion(dateOfCompletion);
 					obj.setE_mail_id(((String) row.get("e_mail_id")).toString());
 
 					obj.setEmp_region(((String) row.get("emp_region")).toString());
