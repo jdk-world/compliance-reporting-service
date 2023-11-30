@@ -18,7 +18,7 @@ import java.util.Map.Entry;
 public class ComplianceService {
 	@Autowired
 	JdbcTemplate jdbc;
-	public static final String DEFAULT_DATE_COMPLETION = "1900-01-01";//2023-11-02T11:01//2023-10-01
+	public static final String DEFAULT_DATE_UNCOMPLETION = "1900-01-01";//2023-11-02T11:01//2023-10-01
 
 	
 	public List<Employee> findAllComplianceReports(String[] filterArr) {
@@ -94,12 +94,12 @@ public class ComplianceService {
 					
 					int patchId = (Integer) row.get("applicable_patch_id");
 					
-					obj.setApplicable_patch_id(((String) patchIdNameMap.get(patchId).toString()));
+					obj.setApplicable_patch_id(((String) patchIdNameMap.get(patchId).toString()+"(#"+patchId+")"));
 					obj.setPatch_compliance(((String) row.get("patch_compliance")).toString());
 					
 					String dateOfCompletion = ((Date) row.get("date_of_completion")).toString();
-					if(StringUtils.equalsIgnoreCase(DEFAULT_DATE_COMPLETION, dateOfCompletion))
-						dateOfCompletion = StringUtils.EMPTY;
+					if(StringUtils.equalsIgnoreCase(DEFAULT_DATE_UNCOMPLETION, dateOfCompletion))
+						dateOfCompletion = StringUtils.EMPTY+"-";
 					
 					obj.setDate_of_completion(dateOfCompletion);
 					obj.setE_mail_id(((String) row.get("e_mail_id")).toString());
@@ -116,6 +116,7 @@ public class ComplianceService {
 			}
 				return slots;
 			}
+
 
 	public HashMap<Integer, String> findPatchIdNameMap() {
 				String sql = "SELECT * FROM PatchCatalog";
