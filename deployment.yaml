@@ -43,7 +43,7 @@ spec:
     spec:
       containers:
       - name: compliance-reporting-service-ver1
-        image: docker.io/saurabh2204/compliance-reporting-service:latest
+        image: gcr.io/dulcet-listener-317509/compliance-reporting-service:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8899
